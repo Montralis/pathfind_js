@@ -37,6 +37,7 @@ function drawBoard()
       for(j = 0; j < 30; j++)
         drawOnePoint(i, j, board[i][j]);
         
+   var test =0;
 }
 
 function drawOnePoint(i, j, val)
