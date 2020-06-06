@@ -1,0 +1,24 @@
+#canvas{
+    width: 15cm;
+    height: 15cm;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border: 1px solid black;
+}
+
+h3{
+    top: 2%;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    color: black;
+}
+p{
+    top: 5%;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    color: black;
+}
