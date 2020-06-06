@@ -9,4 +9,11 @@ class Linie {
         alert("Die Linie geht von " + this.startpunkt.say_point() + " nach "+this.endpunkt.say_point());
     }
 
+    get_startpunkt(){
+        return this.startpunkt;
+    }
+    get_endpunkt(){
+        return this.endpunkt;
+    }
+
 }

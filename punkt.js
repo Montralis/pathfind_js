@@ -8,4 +8,11 @@ class Punkt {
         var ausgabe = this.x + "," + this.y;
         return ausgabe;
     }
+
+    get_x(){
+        return this.x;
+    }
+    get_y(){
+        return this.y;
+    }
 }
