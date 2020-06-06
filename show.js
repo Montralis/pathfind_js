@@ -36,6 +36,8 @@ function drawBoard()
     for(i = 0; i < 30; i++)
       for(j = 0; j < 30; j++)
         drawOnePoint(i, j, board[i][j]);
+
+   var dasistkeintest ="test";
         
    var test =100;
 }
