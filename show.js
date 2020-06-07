@@ -1,5 +1,9 @@
 var board;
 var border;
+var canvas = document.getElementsByTagName('canvas')[0];
+var ctx = canvas.getContext("2d");
+var walker;
+
 window.onload = function () {
     console.log('Dokument geladen');
     (function set_canvas(){
@@ -12,7 +16,7 @@ window.onload = function () {
     create_border();
     add_line_to_board();
     show_line();
-      
+    start(new Punkt(0,0), new Punkt(29,29));
 }
 
 function get2DArray(cols,rown) {
@@ -23,16 +27,14 @@ function get2DArray(cols,rown) {
    return arr;
 }
 
-function default_init_array(arry, defalut_value) {
+function default_init_array(arry, default_value) {
 
-   for(var x = 0; x < arry.length; x++){    
-      for(var y = 0; y < arry[0].length; y++){ 
-          arry[x][y] =defalut_value;    
+   for(var x = 0; x < arry.length; x++){
+      for(var y = 0; y < arry[0].length; y++){
+          arry[x][y] =default_value;
       }    
   }
-  console.log(board);
-
-  return arry;
+   return arry;
 }
 
 function initBoard()
@@ -47,16 +49,13 @@ function initBoard()
      
       function drawOnePoint(i, j)
       {
-         var canvas = document.getElementsByTagName('canvas')[0];
-         ctx = canvas.getContext('2d');
-         ctx.fillRect(i*20+10,j*20+10,1,1); 
+         ctx.fillRect(i*20+10,j*20+10,1,1);
       }
    })();
 }
 
 function add_line_to_board() {
     border.forEach(Linie =>{
-        console.log(Linie);
         for(var i = Linie.get_startpunkt().get_x(); i <= Linie.get_endpunkt().get_x(); i++) {
             for (var j = Linie.get_startpunkt().get_y(); j <= Linie.get_endpunkt().get_y(); j++) {
                 board[j][i] = 1;
@@ -77,8 +76,6 @@ function  create_border() {
 }
 
 function show_line() {
-   var canvas = document.getElementsByTagName('canvas')[0];
-   var ctx = canvas.getContext("2d");
   
    border.forEach(linie => {
       ctx.beginPath();
@@ -88,3 +85,15 @@ function show_line() {
 
    });
 }
+
+function start(punkt, zielpunkt) {
+    ctx.fillStyle = "green";
+    ctx.fillRect(punkt.get_x()*20+10,punkt.get_y()*20+10,5,5);
+    board[punkt.get_x()][punkt.get_y()] = 3;
+    walker = new Person(punkt,zielpunkt);
+    while (! walker.ziel_erreicht()){
+        walker.schritt();
+    }
+    console.log(board);
+}
+

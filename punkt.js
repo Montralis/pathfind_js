@@ -15,4 +15,10 @@ class Punkt {
     get_y(){
         return this.y;
     }
+    setx(x){
+        this.x = x;
+    }
+    sety(y){
+        this.y = y;
+    }
 }
