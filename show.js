@@ -10,6 +10,7 @@ window.onload = function () {
      
     initBoard();
     create_border();
+    add_line_to_board();
     show_line();
       
 }
@@ -48,18 +49,31 @@ function initBoard()
       {
          var canvas = document.getElementsByTagName('canvas')[0];
          ctx = canvas.getContext('2d');
-
          ctx.fillRect(i*20+10,j*20+10,1,1); 
       }
    })();
+}
 
+function add_line_to_board() {
+    border.forEach(Linie =>{
+        console.log(Linie);
+        for(var i = Linie.get_startpunkt().get_x(); i <= Linie.get_endpunkt().get_x(); i++) {
+            for (var j = Linie.get_startpunkt().get_y(); j <= Linie.get_endpunkt().get_y(); j++) {
+                board[j][i] = 1;
+            }
+        }
+    });
 }
 
 function  create_border() {
-   
-  var line1 = new Linie(new Punkt(0,0), new Punkt(5,0));
-  border = new Array();
-  border.push(line1);
+    border = [];
+
+    const line1 = new Linie(new Punkt(2, 0), new Punkt(5, 0));
+    border.push(line1);
+    const line2 = new Linie(new Punkt(10, 3), new Punkt(15, 3));
+    border.push(line2);
+    const line3 = new Linie(new Punkt(10, 3), new Punkt(10, 29));
+    border.push(line3);
 }
 
 function show_line() {
@@ -67,7 +81,6 @@ function show_line() {
    var ctx = canvas.getContext("2d");
   
    border.forEach(linie => {
-      console.log(linie.get_startpunkt().get_x());
       ctx.beginPath();
       ctx.moveTo(linie.get_startpunkt().get_x() * 20 +10, linie.get_startpunkt().get_y()*20+10);
       ctx.lineTo(linie.get_endpunkt().get_x() * 20 +10, linie.get_endpunkt().get_y() * 20 +10);
