@@ -2,7 +2,6 @@ var board;
 var border;
 var canvas = document.getElementsByTagName('canvas')[0];
 var ctx = canvas.getContext("2d");
-var walker;
 
 window.onload = function () {
     console.log('Dokument geladen');
@@ -13,10 +12,8 @@ window.onload = function () {
     }());
      
     initBoard();
-    create_border();
+    create_border(); //Tempo Funtion, after replace this with draw_an_cancas()
     add_line_to_board();
-    show_line();
-    start(new Punkt(0,0), new Punkt(29,29));
 }
 
 function get2DArray(cols,rown) {
@@ -41,11 +38,18 @@ function initBoard()
 {
    board = get2DArray(30,30);
    default_init_array(board, 0);
-   (function () {
 
+   for(let i =0; i < board.length; i++){
+       board[0][i] = -3;
+       board[board.length-1][i] = -3;
+       board[i][0] = -3;
+       board[i][board.length-1] = -3;
+   }
+
+   (function () {
       for(i = 0; i < board.length; i++)
          for(j = 0; j < board[0].length; j++)
-            drawOnePoint(i, j, board[i][j]);   
+            drawOnePoint(i, j);
      
       function drawOnePoint(i, j)
       {
@@ -58,10 +62,18 @@ function add_line_to_board() {
     border.forEach(Linie =>{
         for(var i = Linie.get_startpunkt().get_x(); i <= Linie.get_endpunkt().get_x(); i++) {
             for (var j = Linie.get_startpunkt().get_y(); j <= Linie.get_endpunkt().get_y(); j++) {
-                board[j][i] = 1;
+                board[j][i] = -3;
             }
         }
     });
+    (function show_line(){
+        border.forEach(linie => {
+            ctx.beginPath();
+            ctx.moveTo(linie.get_startpunkt().get_x() * 20 +10, linie.get_startpunkt().get_y()*20+10);
+            ctx.lineTo(linie.get_endpunkt().get_x() * 20 +10, linie.get_endpunkt().get_y() * 20 +10);
+            ctx.stroke();
+        });
+    }());
 }
 
 function  create_border() {
@@ -73,27 +85,9 @@ function  create_border() {
     border.push(line2);
     const line3 = new Linie(new Punkt(10, 3), new Punkt(10, 29));
     border.push(line3);
-}
-
-function show_line() {
-  
-   border.forEach(linie => {
-      ctx.beginPath();
-      ctx.moveTo(linie.get_startpunkt().get_x() * 20 +10, linie.get_startpunkt().get_y()*20+10);
-      ctx.lineTo(linie.get_endpunkt().get_x() * 20 +10, linie.get_endpunkt().get_y() * 20 +10);
-      ctx.stroke();
-
-   });
-}
-
-function start(punkt, zielpunkt) {
-    ctx.fillStyle = "green";
-    ctx.fillRect(punkt.get_x()*20+10,punkt.get_y()*20+10,5,5);
-    board[punkt.get_x()][punkt.get_y()] = 3;
-    walker = new Person(punkt,zielpunkt);
-    while (! walker.ziel_erreicht()){
-        walker.schritt();
-    }
-    console.log(board);
+    const line4 = new Linie(new Punkt(0, 0), new Punkt(29, 0));
+    border.push(line4);
+    const line5 = new Linie(new Punkt(10, 20), new Punkt(29, 20));
+    border.push(line5);
 }
 

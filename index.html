@@ -1,4 +1,4 @@
-<html>
+<html lang="de">
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <title>Pathfinding</title>
@@ -11,11 +11,16 @@
             You can also see the Code. It is written in JS..
         </p>
         <canvas id="canvas"></canvas>
-        <button onclick="default_init_array(board,0)">Reset Map</button>
+        <div id="b_b">
+            <button onclick="default_init_array(board,0)">Reset Map</button>
+            <button onclick="start(new Punkt(1,1), new Punkt(28,28))">Run the Simulation</button>
+        </div>
+
     </body>
     <script src="punkt.js"></script>
     <script src="linie.js"></script>
     <script src="person.js"></script>
     <script src="show.js"></script>
+    <script src="run_s.js"></script>
 
 </html>

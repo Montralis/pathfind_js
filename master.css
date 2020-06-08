@@ -18,13 +18,15 @@ p{
     left: 50%;
     position: absolute;
     transform: translateX(-50%);
-    color: black;
+    color: #000000;
 }
 
-button{
+#b_b{
     position: absolute;
     top: 90%;
     left: 50%;
     transform: translate(-50%,-50%);
-
+}
+#b_b button{
+    margin: 20px;
 }

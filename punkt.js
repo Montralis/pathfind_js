@@ -5,8 +5,7 @@ class Punkt {
     }
 
     say_point() {
-        var ausgabe = this.x + "," + this.y;
-        return ausgabe;
+        return this.x + "," + this.y;
     }
 
     get_x(){
@@ -15,10 +14,10 @@ class Punkt {
     get_y(){
         return this.y;
     }
-    setx(x){
+    set_x(x){
         this.x = x;
     }
-    sety(y){
+    set_y(y){
         this.y = y;
     }
 }

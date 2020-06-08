@@ -1,11 +1,9 @@
 class Person {
 
    constructor(startpunkt,zielpunkt){
-        this.currentpoint = startpunkt;
+        this.startpunkt = startpunkt;
         this.zielpunkt = zielpunkt;
-        this._dx = 0;
-        this._dy = 0;
-        this.berechen_startrichtung();
+        this.steps = 0;
     }
     set_currentpoint(point){
         this.currentpoint = point;
@@ -28,33 +26,64 @@ class Person {
     }
 //--------------------------
 
-    berechen_startrichtung(){
-        var x = this.currentpoint.get_x();
-        var y = this.currentpoint.get_y();
 
-        try{
-            if(board[x+1][y] == 0){
-                this._dx = 1;
-                return;
-            }
-            if(board[x][y+1] == 0){
-                this._dy = 1;
-                return;
-            }
-            throw "Der Start ist eingemauert.";
-        }catch (e) {
-            console.log(e);
+
+    step() {
+        if (this.steps === 0) { //Hier ist der Start
+            this.set_n(this.startpunkt.get_x(), this.startpunkt.get_y(), 1);
+            this.steps++;
+            return true;
         }
+
+        var found = false;
+        for (let i = 0; i < board.length; i++){
+            for (let j = 0; j < board.length; j++) {
+                if (board[i][j] === this.steps)
+                   if(this.set_n(i, j, this.steps + 1))
+                       found = true;
+            }
+        }
+        this.steps++;
+        return found;
+
+   }
+
+    set_n(x,y,pos){
+       var found = false;
+        if(board[x+1][y] === 0){
+            board[x+1][y] = pos;
+            found = true;
+        }
+
+        if(board[x-1][y] === 0){
+            board[x-1][y] = pos;
+            found = true;
+        }
+        if(board[x][y+1] === 0){
+            board[x][y+1] = pos;
+            found = true;
+        }
+
+        if(board[x][y-1] === 0){
+            board[x][y-1] = pos;
+            found = true;
+        }
+        return found;
     }
 
-    ziel_erreicht(){
-       var test =  this.currentpoint.get_x() === this.zielpunkt.get_x() && this.currentpoint.get_y() === this.zielpunkt.get_y();
-       return test;
+    ziel_gefunden(){
+        this.steps--;
+       var x = this.zielpunkt.get_x();
+       var y = this.zielpunkt.get_y();
+       if(board[x+1][y] === this.steps)
+           return true;
+        if(board[x-1][y] === this.steps)
+            return true;
+        if(board[x][y+1] === this.steps)
+            return true;
+        if(board[x][y-1] === this.steps)
+            return true;
+        return false;
     }
-    schritt(){
-        board[ this.currentpoint.get_x()][ this.currentpoint.get_y()] = 2;
-        this.currentpoint.set_x+= this._dx;
-        this.currentpoint.set_y += this._dy;
-        board[ this.currentpoint.get_x()][ this.currentpoint.get_y()] = 3;
-    }
+
 }
